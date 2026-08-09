@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="UTF-8">
+ <title> Calculadora </title>
+ <link rel="Stylesheet"href="estilo.css">
+</head>
+<Body>
+ <div class="Calculadora">
+  <input type= "text" id="display" disabled>
+  <div class="botones">
+   <button onclick= "limpiar()"> C </button>
+   <button onclick= "borrar()"> ⌫ </button>
+   <button onclick= "insertar('/')"> ÷ </button>
+   <button onclick= "insertar('*')"> × </button>
+
+   <button onclick="insertar('7')"> 7</button>
+   <button onclick="insertar('8')"> 8</button>
+   <button onclick="insertar('9')"> 9</button>
+   <button onclick="insertar('-')"> -</button>
+
+   <button onclick="insertar('4')"> 4 </button>
+   <button onclick="insertar('5')"> 5 </button>
+   <button onclick="insertar('6')"> 6 </button>
+   <button onclick="insertar('+')"> + </button>
+
+   <button onclick="insertar('1')"> 1 </button>
+   <button onclick="insertar('2')"> 2 </button>
+   <button onclick="insertar('3')"> 3 </button>
+   <button onclick="calcular()"> = </button>
+   
+   <button onclick="insertar('0')" class="cero"> 0 </button>
+   <button onclick="insertar('.')"> . </button>
+   <button onclick="anterior()"> <- </button>
+  </div>
+ </div>
+ <script src="script.js"> </script>
+</body>
+</html>
