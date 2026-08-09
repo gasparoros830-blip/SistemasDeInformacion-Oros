@@ -1,0 +1,1 @@
+Basicamente el sistema solo es una calculadora simple, quiero ver si seria posible agregarle mas funciones asi como una calculadora cientifica pero por ahora esto es todo.
