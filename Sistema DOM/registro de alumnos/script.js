@@ -18,3 +18,7 @@ class RegistroAlumnos {
         return this.alumnos;
     }
 }
+
+function Registrar() {
+    const Alumno = new Alumno(this.nombre this.legajo);
+}
