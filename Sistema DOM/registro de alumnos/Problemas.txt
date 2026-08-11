@@ -1,4 +1,4 @@
-No pude lograr que el registro funcione, no entiendo bien como hacer que funcione la Programación Orientada a Objetos
+No pude lograr que el registro funcione, Lo que no funciona es el botón de agregar, pero el script de java si funciona
 
 Cosas que no entendi:
 
