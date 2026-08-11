@@ -1,1 +1,7 @@
-No pude lograr que el registro funcione, no estoy seguro de cual es el problema
+No pude lograr que el registro funcione, no entiendo bien como hacer que funcione la Programación Orientada a Objetos
+
+Cosas que no entendi:
+
+Bucle for, for...of y for...in
+Arrow functions (ES6)
+Prototipos: el modelo bajo las clases
