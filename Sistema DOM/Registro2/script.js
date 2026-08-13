@@ -1,3 +1,7 @@
+const Boton = document.getElementById("BotonAgregar");
+let Nombre = document.getElementById("inputNombre").value;
+let Legajo = document.getElementById("inputLegajo").value;
+
 class Alumno {
     constructor(nombre, legajo) {
         this.nombre = nombre;
@@ -18,3 +22,8 @@ class RegistroAlumnos {
         return this.alumnos;
     }
 }
+
+Boton.addEventListener("click", function(AgregarAlumno) {
+        const Alumno1 = new Alumno(Nombre, Legajo)
+    console.log(Alumno1)
+});
