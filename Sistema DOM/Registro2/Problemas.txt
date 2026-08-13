@@ -1,0 +1,7 @@
+No pude lograr que el registro funcione, lo que no funciona es la clase del registro, pero el boton y el constructor de la clase de alumnos si funciona
+
+Cosas que no entendi de la teoria:
+
+Bucle for, for...of y for...in
+Arrow functions (ES6)
+Prototipos: el modelo bajo las clases
