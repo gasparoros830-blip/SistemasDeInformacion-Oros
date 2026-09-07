@@ -1,0 +1,50 @@
+RESUMEN DE RESPUESTAS
+=======================
+
+1. Identificar entidades
+ Clientes, Pedidos, Productos, Empleados
+
+2. Atributos de cada entidad
+- Clientes: NombreCliente (Compuesto: Nombre, Apellido), Direccion (Calle, Numero, Ciudad), TelefonoCliente (multivaluado), EmailCliente (multivaluado), Id_Cliente (Simple)
+- Pedidos: ProductoCodigo (Simple), Fecha (Compuesto: Dia, Mes, Año), Estado (Simple), Id_Cliente (Simple) Id_Empleado (Simple)
+- Productos: ProductoCodigo (Simple), Stock (Multivaluado), Precio (Simple), Nombre (Simple)
+- Empleados:  NombreEmpleado (Compuesto: Nombre, Apellido), Direccion (Compuesto: Calle, Numero, Ciudad), TelefonoEmpleado (multivaluado), Email (multivaluado), Id_Empleado (Simple), Id_Empleado (Simple)
+
+3. Claves candidatas y clave primaria
+- Clientes: Candidata { NombreCliente, EmailCliente, Id_Cliente } PK: Id_Cliente | Conviene mas darle a cada cliente una clave unica ya que los nombres y los Emails pueden ser iguales si hay muchos clientes
+- Pedidos: Candidata { Id_Pedido } PK: Id_Pedido | Hay que usar un atributo nuevo que sea unico para cada pedido ya que ningun otro atributo cumple los requisitos para ser PK
+- Productos: Candidata { ProductoCodigo } PK: Codigo | El atributo Codigo ya es bueno como clave primaria ya que esta es unica por cada pedido.
+- Empleados: Candidata { Nombre, Telefono } PK: Id_Empleado | Con el atributo nombre es el mismo problema de la posibilidad de que se repita, y con el atributo Telefono se toma el numero de telefono, que es unico para cada emplado pero no es estable ya que este puede cambiar. por esto se necesita crear un atributo de Id_Empleado que cumpla ambos requisitos
+
+4. Relaciones entre entidades
+Cliente - Realiza - Pedido
+Empleado - Atiende - Pedido
+Pedido - Contiene - Producto
+
+5. Cardinalidad de cada relación
+Cliente - 1:N - Pedido (Un cliente puede hacer muchos pedidos)
+Empleado - 1:1- Pedido (Un emplado se encarga de un pedido)
+Pedido - N:M - Producto (Pedidos pueden tener muchos productos, y muchos productos pueden ser pedidos)
+
+6. Atributos de las relaciones
+Pedido-Producto: Cantidad (Cantidad de unidades en el pedido)
+
+7. Atributos multivaluados
+Email de Cliente y de Emplado son multivaluados, Creare una tabla para los emails con campos: IdEmail (PK), Direccion, IdCliente (FK), IdEmpleado (FK)
+
+8. Tablas del diccionario de datos (I)
+- Clientes: NombreCliente, Direccion, Id_Cliente PK
+- Pedidos: ProductoCodigo FK, Fecha, Estado, Id_Cliente FK, Id_Empleado FK, Id_Pedido PK
+- Productos: ProductoCodigo PK, Stock, Precio, Nombre
+- Empleados:  NombreEmpleado, Direccion, TelefonoEmpleado, Email, Id_Empleado, Id_Empleado PK
+-- Email: IdEmail PK, Direccion, IdCliente FK, IdEmpleado FK
+-- Telefono: IdTelefono PK, Numero, IdCliente FK, IdEmpleado FK
+
+9. Tablas del diccionario de datos (II)
+Pedido-Producto (Id_Pedido FK, ProductoCodigo FK, Cantidad) PK: (Id_Pedido, Id_Producto)
+
+10. Listado final de tablas
+Clientes, Pedidos, Productos, Empleados, Email, Telefono
+
+=======================
+📌 Recuerda: Dibuja el diagrama E-R en papel o con herramienta y súbelo junto con este resumen.
