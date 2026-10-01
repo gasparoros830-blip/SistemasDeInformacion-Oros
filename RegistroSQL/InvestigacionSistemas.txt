@@ -1,0 +1,69 @@
+Video de YouTube sobre como hacer la conexión con Node.js
+https://www.youtube.com/watch?v=DylHfRlT8ts
+
+Guia de como obtener las SQLite tools
+https://www.prisma.io/dataguide/sqlite/setting-up-a-local-sqlite-database#setting-up-sqlite-on-windows
+
+Como alojar la base de datos con php/xampp
+https://www.cloudways.com/blog/connect-mysql-with-php/
+
+Mas documentación sobre el método con php
+https://www.phpmyadmin.net/
+
+Lista de posibles formas de alojar
+https://geekflare.com/hosting/best-static-website-hosting/
+
+Esta fue la guía que me dio una IA al darle todas las fuentes, pero no fue exitosa
+
+Para alojar una base de datos **SQLite** en tu propia computadora y vincularla mediante **Node.js**, el proceso consta de configurar el archivo local de la base de datos y conectarlo a través de un entorno de ejecución en Node.js.
+
+---
+
+Para alojar una base de datos SQLite en tu propia computadora y vincularla mediante Node.js, el proceso consta de configurar el archivo local de la base de datos y conectarlo a través de un entorno de ejecución en Node.js.
+
+---
+
+1. Configurar y alojar SQLite localmente en tu computadora
+
+SQLite no requiere un servidor complejo en ejecución continua, ya que opera directamente sobre un archivo local en tu sistema de archivos. Para instalarlo y crear tu base de datos localmente:
+
+- Instalación de herramientas de SQLite:
+  - Windows / macOS / Linux: Descarga el archivo comprimido ejecutable (sqlite-tools) desde la página oficial de SQLite y extráelo en una carpeta de tu preferencia.
+  - Linux (vía gestor de paquetes): Se puede instalar directamente ejecutando comandos en la terminal según la distribución, como sudo apt install sqlite3 (Debian/Ubuntu), sudo yum install sqlite (CentOS) o sudo dnf install sqlite (Fedora).
+
+- Creación del archivo de base de datos local:
+  - Si ejecutas el comando sqlite3 sin parámetros, SQLite se iniciará en modo de base de datos en memoria temporal, por lo que los datos no se guardarán en el disco.
+  - Para crear un archivo persistente en tu equipo, ejecuta el comando indicando el nombre del archivo (por ejemplo, sqlite3 mi_base_datos.db) o utiliza el comando .open --new nombre_archivo.db dentro de la consola de SQLite.
+
+---
+
+2. Vincular la base de datos SQLite con Node.js
+
+Para interactuar con el archivo de la base de datos SQLite desde un proyecto en Node.js:
+
+- Inicialización del proyecto Node.js: Abre la terminal en la carpeta de tu proyecto y ejecuta npm init -y para crear el archivo de configuración package.json.
+- Herramientas y ORMs: En el entorno de Node.js y TypeScript, se pueden utilizar herramientas y ORMs como Prisma ORM que soportan SQLite para interactuar con la base de datos.
+- Instalación de paquetes: Al igual que con otros gestores de bases de datos, la conexión se realiza descargando los módulos requeridos mediante npm install.
+
+---
+
+Integración directa con el controlador de Node.js (Información fuera de las fuentes)
+
+Nota: El siguiente fragmento de código sobre la utilización del paquete nativo sqlite3 en Node.js no proviene de las fuentes proporcionadas y se incluye con fines ilustrativos. Se recomienda verificar la información de manera independiente.
+
+Para conectar tu proyecto Node.js al archivo .db usando el controlador de SQLite:
+
+1. Instalar el controlador:
+npm install sqlite3
+
+2. Crear el script de conexión (conexion.js):
+const sqlite3 = require('sqlite3').verbose();
+
+// Conecta al archivo local existente o lo crea si no existe
+const db = new sqlite3.Database('./mi_base_datos.db', (err) => {
+  if (err) {
+    console.error('Error al conectar:', err.message);
+  } else {
+    console.log('Conectado exitosamente a la base de datos SQLite local.');
+  }
+});
