@@ -156,3 +156,8 @@ app.post('/guardar', async (req, res) => {
 
 app.listen(3000, () => console.log('Servidor corriendo en http://localhost:3000'));
 ```
+
+
+---------------------------------------------------------------------------------
+
+Puede que la guia de la IA este bien, pero al final del dia no la entiendo para nada, este tema es demasiado complejo como para solo entenderlo con investigacion, muchos de mis compañeros tambien estan teniendo problemas incluso trabajando en grupo. Eh podido aprender algunas cosas, pero personalmente me es imposible aprender de esta manera, necesito algun tipo de explicacion como para poder empezar a entender pero usted solo nos dio lo que tenemos que hacer muy generalmente sin ningun tipo de ayuda especifica.
