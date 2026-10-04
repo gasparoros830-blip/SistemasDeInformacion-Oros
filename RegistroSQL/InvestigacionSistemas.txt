@@ -67,3 +67,92 @@ const db = new sqlite3.Database('./mi_base_datos.db', (err) => {
     console.log('Conectado exitosamente a la base de datos SQLite local.');
   }
 });
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Segui la investigacion este fin de semana (3/10/26), y esto es lo que encontre:
+
+Sitio web que explica una forma de hacer la conexion que yo no use ya que usted me habia dicho que de la forma que ya lo estaba haciendo estaba bien:
+https://www.luisllamas.es/como-usar-sqlite-con-nodejs/
+
+guia nueva que me dio la IA:
+
+Guía para conectar una base de datos **SQLite** a un **formulario HTML** utilizando exclusivamente **Node.js**:
+
+---
+
+### 1. Instalación del paquete SQLite
+1. Inicializa tu proyecto ejecutando en la terminal:
+   ```bash
+   npm init -y
+   ```
+2. Instala el módulo oficial de SQLite para Node.js mediante NPM:
+   ```bash
+   npm install sqlite3
+   ```
+  
+
+---
+
+### 2. Conexión a la Base de Datos SQLite e Inserción de Datos
+
+Crea un archivo de JavaScript (por ejemplo, `db.js`) donde importes el paquete, crees la conexión hacia un archivo físico y definas la función que ejecutará la instrucción SQL de inserción:
+
+```javascript
+import sqlite from 'sqlite3';
+
+// 1. Conectar a la base de datos en un archivo físico local
+const dbPath = './database.db';
+const db = new sqlite.Database(dbPath);
+
+// 2. Función asíncrona para insertar los datos en la tabla 'users'
+async function insertData(name, email) {
+  try {
+    await db.run("INSERT INTO users (name, email) VALUES (?, ?)", [name, email]);
+    console.log('Datos insertados exitosamente');
+  } catch (error) {
+    console.error('Error al insertar datos:', error);
+  }
+}
+```
+
+---
+
+### 3. El Formulario HTML y Servidor Web (Información fuera de las fuentes)
+
+> **Nota**: *Las fuentes explican la conexión y las sentencias CRUD en SQLite con Node.js, pero no contienen el código para crear interfaces HTML ni servidores web HTTP. La siguiente integración con un servidor Express se incluye de manera complementaria y puedes verificarla independientemente.*
+
+**A. Formulario HTML (`index.html`):**
+Crea una página simple con un formulario que envíe los datos vía método `POST`:
+```html
+<form action="/guardar" method="POST">
+  <input type="text" name="name" placeholder="Tu Nombre" required>
+  <input type="email" name="email" placeholder="Tu Correo" required>
+  <button type="submit">Enviar</button>
+</form>
+```
+
+**B. Servidor HTTP en Node.js (`server.js`):**
+Recibe la petición HTTP cuando el usuario envía el formulario y llama a la función de la base de datos:
+```javascript
+import express from 'express';
+const app = express();
+
+// Configuración para leer los datos del formulario
+app.use(express.urlencoded({ extended: true }));
+
+// Ruta que procesa el envío del formulario
+app.post('/guardar', async (req, res) => {
+  // Capturar los campos del formulario
+  const name = req.body.name;
+  const email = req.body.email;
+
+  // Insertar los datos capturados en SQLite
+  await insertData(name, email);
+
+  // Responder al navegador
+  res.send('¡Datos guardados con éxito en la base de datos SQLite!');
+});
+
+app.listen(3000, () => console.log('Servidor corriendo en http://localhost:3000'));
+```
