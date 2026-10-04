@@ -77,87 +77,116 @@ https://www.luisllamas.es/como-usar-sqlite-con-nodejs/
 
 guia nueva que me dio la IA:
 
-Guía para conectar una base de datos **SQLite** a un **formulario HTML** utilizando exclusivamente **Node.js**:
+Para construir una aplicación con un **formulario web** que agregue y extraiga información de la versión más pequeña de una base de datos SQL (**SQLite**), se utiliza el entorno **Node.js** junto con el paquete `sqlite3`.
 
 ---
 
-### 1. Instalación del paquete SQLite
-1. Inicializa tu proyecto ejecutando en la terminal:
-   ```bash
-   npm init -y
-   ```
-2. Instala el módulo oficial de SQLite para Node.js mediante NPM:
-   ```bash
-   npm install sqlite3
-   ```
-  
+### 1. Configuración del proyecto y la base de datos
+
+SQLite es una **base de datos ligera y sin servidor** que permite conectar aplicaciones Node.js de forma rápida y sencilla. Para alojarla localmente, se especifica la ruta de un archivo físico de base de datos (por ejemplo, `./database.db`).
+
+* **Inicializar el proyecto**: En la terminal de la carpeta de trabajo, se ejecuta el comando `npm init -y` para generar el archivo de configuración `package.json`.
+* **Instalar el módulo de SQLite**: Se instala el paquete ejecutable mediante `npm install sqlite3`.
+* **Crear la conexión**: En el script de JavaScript, se importa la librería y se instancia el objeto `sqlite.Database` pasando la ruta del archivo local:
+  ```javascript
+  import sqlite from 'sqlite3';
+  const dbPath = './database.db';
+  const db = new sqlite.Database(dbPath);
+  ```
 
 ---
 
-### 2. Conexión a la Base de Datos SQLite e Inserción de Datos
+### 2. Agregar y extraer información en SQLite
 
-Crea un archivo de JavaScript (por ejemplo, `db.js`) donde importes el paquete, crees la conexión hacia un archivo físico y definas la función que ejecutará la instrucción SQL de inserción:
+Las operaciones CRUD en SQLite se gestionan mediante métodos asíncronos en Node.js:
 
+* **Agregar información (`INSERT`)**: Se utiliza una función asíncrona que ejecuta la sentencia SQL `INSERT INTO` mediante la instrucción `db.run()` pasando los parámetros ingresados:
+  ```javascript
+  async function insertData(name, email) {
+    try {
+      await db.run("INSERT INTO users (name, email) VALUES (?, ?)", [name, email]);
+      console.log('Datos insertados exitosamente');
+    } catch (error) {
+      console.error('Error al insertar datos:', error);
+    }
+  }
+  ```
+* **Extraer información (`SELECT`)**: Se ejecuta la consulta SQL `SELECT * FROM ...` utilizando el método `db.all()` para consultar todos los registros de la tabla o `db.each()` para procesarlos fila por fila:
+  ```javascript
+  async function fetchData() {
+    try {
+      const users = await db.all("SELECT * FROM users");
+      console.log('Todos los usuarios:', users);
+    } catch (error) {
+      console.error('Error al obtener datos:', error);
+    }
+  }
+  ```
+
+---
+
+### 3. Integración con el Formulario Web (Información fuera de las fuentes)
+
+> **Nota**: *El código para la creación del servidor HTTP con Express y la estructura del formulario HTML no provienen de las fuentes proporcionadas. Esta información se incluye de manera complementaria para completar la arquitectura solicitada y es posible que desees verifiarla de manera independiente.*
+
+#### A. Formulario HTML (`index.html`)
+El formulario envía los datos ingresados al servidor Node.js utilizando el método `POST`:
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario SQLite</title>
+</head>
+<body>
+  <h2>Agregar Usuario</h2>
+  <form action="/agregar" method="POST">
+    <input type="text" name="name" placeholder="Nombre completo" required />
+    <input type="email" name="email" placeholder="Correo electrónico" required />
+    <button type="submit">Guardar</button>
+  </form>
+
+  <h2>Extraer Usuarios</h2>
+  <a href="/usuarios">Ver usuarios registrados</a>
+</body>
+</html>
+```
+
+#### B. Servidor Web en Node.js (`server.js`)
+Configura las rutas para recibir el formulario y realizar la inserción o extracción de datos:
 ```javascript
+import express from 'express';
 import sqlite from 'sqlite3';
 
-// 1. Conectar a la base de datos en un archivo físico local
+const app = express();
+app.use(express.urlencoded({ extended: true }));
+
 const dbPath = './database.db';
 const db = new sqlite.Database(dbPath);
 
-// 2. Función asíncrona para insertar los datos en la tabla 'users'
-async function insertData(name, email) {
+// Ruta para recibir los datos del formulario HTML
+app.post('/agregar', async (req, res) => {
+  const { name, email } = req.body;
   try {
     await db.run("INSERT INTO users (name, email) VALUES (?, ?)", [name, email]);
-    console.log('Datos insertados exitosamente');
+    res.send('¡Información agregada con éxito!');
   } catch (error) {
-    console.error('Error al insertar datos:', error);
+    res.status(500).send('Error al insertar datos');
   }
-}
-```
-
----
-
-### 3. El Formulario HTML y Servidor Web (Información fuera de las fuentes)
-
-> **Nota**: *Las fuentes explican la conexión y las sentencias CRUD en SQLite con Node.js, pero no contienen el código para crear interfaces HTML ni servidores web HTTP. La siguiente integración con un servidor Express se incluye de manera complementaria y puedes verificarla independientemente.*
-
-**A. Formulario HTML (`index.html`):**
-Crea una página simple con un formulario que envíe los datos vía método `POST`:
-```html
-<form action="/guardar" method="POST">
-  <input type="text" name="name" placeholder="Tu Nombre" required>
-  <input type="email" name="email" placeholder="Tu Correo" required>
-  <button type="submit">Enviar</button>
-</form>
-```
-
-**B. Servidor HTTP en Node.js (`server.js`):**
-Recibe la petición HTTP cuando el usuario envía el formulario y llama a la función de la base de datos:
-```javascript
-import express from 'express';
-const app = express();
-
-// Configuración para leer los datos del formulario
-app.use(express.urlencoded({ extended: true }));
-
-// Ruta que procesa el envío del formulario
-app.post('/guardar', async (req, res) => {
-  // Capturar los campos del formulario
-  const name = req.body.name;
-  const email = req.body.email;
-
-  // Insertar los datos capturados en SQLite
-  await insertData(name, email);
-
-  // Responder al navegador
-  res.send('¡Datos guardados con éxito en la base de datos SQLite!');
 });
 
-app.listen(3000, () => console.log('Servidor corriendo en http://localhost:3000'));
+// Ruta para extraer y mostrar la información almacenada
+app.get('/usuarios', async (req, res) => {
+  try {
+    const users = await db.all("SELECT * FROM users");
+    res.json(users);
+  } catch (error) {
+    res.status(500).send('Error al extraer datos');
+  }
+});
+
+app.listen(3000, () => console.log('Servidor en ejecución en http://localhost:3000'));
 ```
-
-
 ---------------------------------------------------------------------------------
 
 Puede que la guia de la IA este bien, pero al final del dia no la entiendo para nada, este tema es demasiado complejo como para solo entenderlo con investigacion, muchos de mis compañeros tambien estan teniendo problemas incluso trabajando en grupo. Eh podido aprender algunas cosas, pero personalmente me es imposible aprender de esta manera, necesito algun tipo de explicacion como para poder empezar a entender pero usted solo nos dio lo que tenemos que hacer muy generalmente sin ningun tipo de ayuda especifica.
