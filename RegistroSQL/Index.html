@@ -6,7 +6,7 @@
  <link rel="Stylesheet"href="Estilo/estilo.css">
 </head>
 <Body>
-    <form action="/agregar" method="POST">
+    <form onsubmit="insertData(event)">
         <h1> Registro de alumnos </h1>
         <label for="nombre"> Nombre </label>
         <input type="text" name="nombre" id="nombre" required>
@@ -23,6 +23,6 @@
         <br>
         <input type="submit" value="Registrar">
     </form>
- <script src="script.js"> </script>
+ <script src="Java/script.js"> </script>
 </body>
 </html>
