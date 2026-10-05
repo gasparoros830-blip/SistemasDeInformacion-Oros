@@ -190,3 +190,6 @@ app.listen(3000, () => console.log('Servidor en ejecución en http://localhost:3
 ---------------------------------------------------------------------------------
 
 Puede que la guia de la IA este bien, pero al final del dia no la entiendo para nada, este tema es demasiado complejo como para solo entenderlo con investigacion, muchos de mis compañeros tambien estan teniendo problemas incluso trabajando en grupo. Eh podido aprender algunas cosas, pero personalmente me es imposible aprender de esta manera, necesito algun tipo de explicacion como para poder empezar a entender pero usted solo nos dio lo que tenemos que hacer muy generalmente sin ningun tipo de ayuda especifica.
+El conector entiendo medianamente como funciona, pero intentar ir a localhost:3000 nunca funciona, intentar subir datos desde el html no funciona y no se como conectar más de un archivo .js con el html.
+al ser un trabajo de investigación se me han mezclado un montón de diferentes fuentes y ya no se cómo arreglarlo, el trabajo es demasiado complejo para entenderlo por mi mismo sin IA, e incluso con la IA no lo logro entender. 
+se lo ruego, por lo menos guieme en que guía leer o que en que manual buscar, hay tantas formas de hacerlo que se vuelve abrumador y no me permite entender nada
